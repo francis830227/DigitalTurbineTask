@@ -23,6 +23,11 @@
     NSLog(@"sendButtonClicked");
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:true];
+    [super touchesBegan:touches withEvent:event];
+}
+
 - (void)setupViews {
     // setup viewcontroller
     self.view.backgroundColor = UIColor.whiteColor;

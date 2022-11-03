@@ -16,6 +16,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupViews];
+}
+
+- (void)send:(UIButton*)sender {
+    NSLog(@"sendButtonClicked");
+}
+
+- (void)setupViews {
     // setup viewcontroller
     self.view.backgroundColor = UIColor.whiteColor;
     
@@ -56,6 +64,7 @@
     [sendButton setTitle:@"Send" forState:UIControlStateNormal];
     [sendButton setBackgroundColor:UIColor.blueColor];
     [sendButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    [sendButton addTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
     
     stackView.axis = UILayoutConstraintAxisVertical;
     stackView.distribution = UIStackViewDistributionEqualSpacing;

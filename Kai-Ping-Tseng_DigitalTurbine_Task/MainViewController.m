@@ -15,7 +15,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setupViews];
 }
 
@@ -26,6 +25,27 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:true];
     [super touchesBegan:touches withEvent:event];
+}
+
+//- (void)textFieldDidBeginEditing:(UITextField *)textField {
+//
+//}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    NSString *str = textField.text;
+    
+    switch (textField.tag) {
+        case appIDTFType:
+            self.appID = str.integerValue;
+            break;
+        case userIDTFType:
+            self.userID = str;
+            break;
+        case securityTokenTFType:
+            self.securityToken = str;
+    }
+    
+    NSLog(@"%ld", (long)self.appID);
 }
 
 - (void)setupViews {
@@ -40,27 +60,37 @@
     appIDLabel.text = @"Application ID";
     appIDLabel.textAlignment = NSTextAlignmentLeft;
     
-    UITextField *appIDTextField = [[UITextField alloc] init];
-    appIDTextField.backgroundColor = UIColor.lightGrayColor;
-    appIDTextField.placeholder = @"Enter...";
+    self.appIDTextField = [[UITextField alloc] init];
+    self.appIDTextField.backgroundColor = UIColor.lightGrayColor;
+    self.appIDTextField.placeholder = @"Enter...";
+    self.appIDTextField.tag = 0;
+    self.appIDTextField.delegate = self;
+    self.appIDTextField.keyboardType = UIKeyboardTypeNumberPad;
+    [self.appIDTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     UILabel *userIDLabel = [[UILabel alloc] init];
     userIDLabel.backgroundColor = UIColor.clearColor;
     userIDLabel.text = @"User ID";
     userIDLabel.textAlignment = NSTextAlignmentLeft;
     
-    UITextField *userIDTextField = [[UITextField alloc] init];
-    userIDTextField.backgroundColor = UIColor.lightGrayColor;
-    userIDTextField.placeholder = @"Enter...";
+    self.userIDTextField = [[UITextField alloc] init];
+    self.userIDTextField.backgroundColor = UIColor.lightGrayColor;
+    self.userIDTextField.placeholder = @"Enter...";
+    self.userIDTextField.tag = 1;
+    self.userIDTextField.delegate = self;
+    [self.userIDTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     UILabel *securityTokenLabel = [[UILabel alloc] init];
     securityTokenLabel.backgroundColor = UIColor.clearColor;
     securityTokenLabel.text = @"securityTokenLabel";
     securityTokenLabel.textAlignment = NSTextAlignmentLeft;
     
-    UITextField *securityTokenTextField = [[UITextField alloc] init];
-    securityTokenTextField.backgroundColor = UIColor.lightGrayColor;
-    securityTokenTextField.placeholder = @"Enter...";
+    self.securityTokenTextField = [[UITextField alloc] init];
+    self.securityTokenTextField.backgroundColor = UIColor.lightGrayColor;
+    self.securityTokenTextField.placeholder = @"Enter...";
+    self.securityTokenTextField.tag = 2;
+    self.securityTokenTextField.delegate = self;
+    [self.securityTokenTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     UIView *blankView = [[UIView alloc] init];
     blankView.backgroundColor = UIColor.whiteColor;
@@ -76,11 +106,11 @@
     stackView.alignment = UIStackViewAlignmentCenter;
     stackView.spacing = 10;
     [stackView addArrangedSubview:appIDLabel];
-    [stackView addArrangedSubview:appIDTextField];
+    [stackView addArrangedSubview:self.appIDTextField];
     [stackView addArrangedSubview:userIDLabel];
-    [stackView addArrangedSubview:userIDTextField];
+    [stackView addArrangedSubview:self.userIDTextField];
     [stackView addArrangedSubview:securityTokenLabel];
-    [stackView addArrangedSubview:securityTokenTextField];
+    [stackView addArrangedSubview:self.securityTokenTextField];
     [stackView addArrangedSubview:blankView];
     [stackView addArrangedSubview:sendButton];
     [self.view addSubview:stackView];
@@ -89,20 +119,20 @@
     [appIDLabel.heightAnchor constraintEqualToConstant:40].active = true;
     [appIDLabel.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
     
-    [appIDTextField.heightAnchor constraintEqualToConstant:40].active = true;
-    [appIDTextField.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
+    [self.appIDTextField.heightAnchor constraintEqualToConstant:40].active = true;
+    [self.appIDTextField.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
     
     [userIDLabel.heightAnchor constraintEqualToConstant:40].active = true;
     [userIDLabel.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
     
-    [userIDTextField.heightAnchor constraintEqualToConstant:40].active = true;
-    [userIDTextField.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
+    [self.userIDTextField.heightAnchor constraintEqualToConstant:40].active = true;
+    [self.userIDTextField.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
     
     [securityTokenLabel.heightAnchor constraintEqualToConstant:40].active = true;
     [securityTokenLabel.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
     
-    [securityTokenTextField.heightAnchor constraintEqualToConstant:40].active = true;
-    [securityTokenTextField.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
+    [self.securityTokenTextField.heightAnchor constraintEqualToConstant:40].active = true;
+    [self.securityTokenTextField.widthAnchor constraintEqualToAnchor:stackView.widthAnchor multiplier:0.7].active = true;
     
     [blankView.heightAnchor constraintEqualToConstant:20].active = true;
     

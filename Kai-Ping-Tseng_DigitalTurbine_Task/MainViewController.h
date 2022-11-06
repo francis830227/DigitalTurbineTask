@@ -9,7 +9,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainViewController : UIViewController
+typedef NS_ENUM(NSInteger, TextFieldType) { appIDTFType, userIDTFType, securityTokenTFType };
+
+
+@interface MainViewController : UIViewController <UITextFieldDelegate>
+
+@property UITextField *appIDTextField;
+
+@property NSInteger appID;
+
+@property UITextField *userIDTextField;
+
+@property NSString *userID;
+
+@property UITextField *securityTokenTextField;
+
+@property NSString *securityToken;
+
+
 
 @end
 

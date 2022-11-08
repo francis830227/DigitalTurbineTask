@@ -9,6 +9,6 @@
 
 @interface ListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
-- (instancetype) initWithOffers: (NSArray *)offers;
+- (instancetype) initWithOffers: (NSArray *)offers andIsSidIdentical: (BOOL) isSidIdentical;
 
 @end

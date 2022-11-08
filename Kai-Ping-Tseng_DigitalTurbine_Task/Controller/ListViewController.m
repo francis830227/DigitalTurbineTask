@@ -13,21 +13,13 @@
 
 @property NSArray *offers;
 
+@property BOOL isSidIdentical;
+
 @end
 
 @implementation ListViewController
 
 static NSString *cellIdentifier = @"cell";
-
-- (instancetype) initWithOffers: (NSArray *)offers {
-    self = [super initWithNibName:nil bundle:nil];
-    
-    if (self) {
-        self.offers = offers;
-    }
-    
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,6 +39,19 @@ static NSString *cellIdentifier = @"cell";
     [tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = true;
 }
 
+// MARK: Initialization
+- (instancetype) initWithOffers: (NSArray *)offers andIsSidIdentical: (BOOL) isSidIdentical {
+    self = [super initWithNibName:nil bundle:nil];
+    
+    if (self) {
+        self.offers = offers;
+        self.isSidIdentical = isSidIdentical;
+    }
+    
+    return self;
+}
+
+// MARK: UITableView delegate & datasource
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     OfferTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     Offer *offer = _offers[indexPath.row];
@@ -64,7 +69,7 @@ static NSString *cellIdentifier = @"cell";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"hihi";
+    return _isSidIdentical ? @"signature is correct" : @"signature is incorrect";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

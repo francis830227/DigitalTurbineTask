@@ -9,6 +9,7 @@
 
 @implementation Offer
 
+// MARK: Initialization
 - (instancetype) initWithTitle: (NSString *)title andImageURL: (NSURL *)url {
     self = [super init];
     

@@ -10,6 +10,10 @@
 		EB0C5FF0291A974D00E2C025 /* Offer.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C5FEF291A974D00E2C025 /* Offer.m */; };
 		EB0C5FF4291A9D9A00E2C025 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C5FF3291A9D9A00E2C025 /* ListViewController.m */; };
 		EB0C5FF7291AA27500E2C025 /* OfferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C5FF6291AA27500E2C025 /* OfferTableViewCell.m */; };
+		EB0C6000291B073900E2C025 /* SHA1Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C5FFF291B073900E2C025 /* SHA1Helper.m */; };
+		EB0C6003291B091E00E2C025 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6002291B091E00E2C025 /* NetworkManager.m */; };
+		EB0C6006291B0CD000E2C025 /* DeviceInfoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6005291B0CD000E2C025 /* DeviceInfoHelper.m */; };
+		EB0C6009291B105500E2C025 /* AdvertisingInfoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6008291B105500E2C025 /* AdvertisingInfoHelper.m */; };
 		EBB09AA72913ED8B00A32275 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AA62913ED8B00A32275 /* AppDelegate.m */; };
 		EBB09AAA2913ED8B00A32275 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AA92913ED8B00A32275 /* SceneDelegate.m */; };
 		EBB09AB22913ED8C00A32275 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBB09AB12913ED8C00A32275 /* Assets.xcassets */; };
@@ -45,6 +49,14 @@
 		EB0C5FF3291A9D9A00E2C025 /* ListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		EB0C5FF5291AA27500E2C025 /* OfferTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfferTableViewCell.h; sourceTree = "<group>"; };
 		EB0C5FF6291AA27500E2C025 /* OfferTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfferTableViewCell.m; sourceTree = "<group>"; };
+		EB0C5FFE291B073900E2C025 /* SHA1Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHA1Helper.h; sourceTree = "<group>"; };
+		EB0C5FFF291B073900E2C025 /* SHA1Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHA1Helper.m; sourceTree = "<group>"; };
+		EB0C6001291B091E00E2C025 /* NetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		EB0C6002291B091E00E2C025 /* NetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		EB0C6004291B0CD000E2C025 /* DeviceInfoHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceInfoHelper.h; sourceTree = "<group>"; };
+		EB0C6005291B0CD000E2C025 /* DeviceInfoHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceInfoHelper.m; sourceTree = "<group>"; };
+		EB0C6007291B105500E2C025 /* AdvertisingInfoHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdvertisingInfoHelper.h; sourceTree = "<group>"; };
+		EB0C6008291B105500E2C025 /* AdvertisingInfoHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdvertisingInfoHelper.m; sourceTree = "<group>"; };
 		EBB09AA22913ED8B00A32275 /* Kai-Ping-Tseng_DigitalTurbine_Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kai-Ping-Tseng_DigitalTurbine_Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB09AA52913ED8B00A32275 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EBB09AA62913ED8B00A32275 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -88,6 +100,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB0C5FF8291B041A00E2C025 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EB0C5FEE291A974D00E2C025 /* Offer.h */,
+				EB0C5FEF291A974D00E2C025 /* Offer.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EB0C5FF9291B043800E2C025 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EB0C5FF5291AA27500E2C025 /* OfferTableViewCell.h */,
+				EB0C5FF6291AA27500E2C025 /* OfferTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EB0C5FFA291B045600E2C025 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EBB09ADC2914107400A32275 /* MainViewController.h */,
+				EBB09ADD2914107400A32275 /* MainViewController.m */,
+				EB0C5FF2291A9D9A00E2C025 /* ListViewController.h */,
+				EB0C5FF3291A9D9A00E2C025 /* ListViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EB0C5FFB291B05B800E2C025 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				EB0C600A291B11AC00E2C025 /* Helpers */,
+				EB0C6001291B091E00E2C025 /* NetworkManager.h */,
+				EB0C6002291B091E00E2C025 /* NetworkManager.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		EB0C600A291B11AC00E2C025 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				EB0C5FFE291B073900E2C025 /* SHA1Helper.h */,
+				EB0C5FFF291B073900E2C025 /* SHA1Helper.m */,
+				EB0C6004291B0CD000E2C025 /* DeviceInfoHelper.h */,
+				EB0C6005291B0CD000E2C025 /* DeviceInfoHelper.m */,
+				EB0C6007291B105500E2C025 /* AdvertisingInfoHelper.h */,
+				EB0C6008291B105500E2C025 /* AdvertisingInfoHelper.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		EBB09A992913ED8B00A32275 = {
 			isa = PBXGroup;
 			children = (
@@ -111,18 +175,14 @@
 		EBB09AA42913ED8B00A32275 /* Kai-Ping-Tseng_DigitalTurbine_Task */ = {
 			isa = PBXGroup;
 			children = (
+				EB0C5FF8291B041A00E2C025 /* Model */,
+				EB0C5FF9291B043800E2C025 /* View */,
+				EB0C5FFA291B045600E2C025 /* Controller */,
+				EB0C5FFB291B05B800E2C025 /* Utility */,
 				EBB09AA52913ED8B00A32275 /* AppDelegate.h */,
 				EBB09AA62913ED8B00A32275 /* AppDelegate.m */,
 				EBB09AA82913ED8B00A32275 /* SceneDelegate.h */,
 				EBB09AA92913ED8B00A32275 /* SceneDelegate.m */,
-				EBB09ADC2914107400A32275 /* MainViewController.h */,
-				EBB09ADD2914107400A32275 /* MainViewController.m */,
-				EB0C5FF2291A9D9A00E2C025 /* ListViewController.h */,
-				EB0C5FF3291A9D9A00E2C025 /* ListViewController.m */,
-				EB0C5FF5291AA27500E2C025 /* OfferTableViewCell.h */,
-				EB0C5FF6291AA27500E2C025 /* OfferTableViewCell.m */,
-				EB0C5FEE291A974D00E2C025 /* Offer.h */,
-				EB0C5FEF291A974D00E2C025 /* Offer.m */,
 				EBB09AB12913ED8C00A32275 /* Assets.xcassets */,
 				EBB09AB32913ED8C00A32275 /* LaunchScreen.storyboard */,
 				EBB09AB62913ED8C00A32275 /* Info.plist */,
@@ -277,12 +337,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB0C6009291B105500E2C025 /* AdvertisingInfoHelper.m in Sources */,
 				EB0C5FF7291AA27500E2C025 /* OfferTableViewCell.m in Sources */,
+				EB0C6006291B0CD000E2C025 /* DeviceInfoHelper.m in Sources */,
 				EBB09AA72913ED8B00A32275 /* AppDelegate.m in Sources */,
 				EBB09AB82913ED8C00A32275 /* main.m in Sources */,
 				EB0C5FF4291A9D9A00E2C025 /* ListViewController.m in Sources */,
+				EB0C6000291B073900E2C025 /* SHA1Helper.m in Sources */,
 				EBB09AAA2913ED8B00A32275 /* SceneDelegate.m in Sources */,
 				EB0C5FF0291A974D00E2C025 /* Offer.m in Sources */,
+				EB0C6003291B091E00E2C025 /* NetworkManager.m in Sources */,
 				EBB09ADE2914107400A32275 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

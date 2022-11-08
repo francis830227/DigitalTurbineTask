@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB0C5FF0291A974D00E2C025 /* Offer.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C5FEF291A974D00E2C025 /* Offer.m */; };
 		EBB09AA72913ED8B00A32275 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AA62913ED8B00A32275 /* AppDelegate.m */; };
 		EBB09AAA2913ED8B00A32275 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AA92913ED8B00A32275 /* SceneDelegate.m */; };
 		EBB09AB22913ED8C00A32275 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBB09AB12913ED8C00A32275 /* Assets.xcassets */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB0C5FEE291A974D00E2C025 /* Offer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Offer.h; sourceTree = "<group>"; };
+		EB0C5FEF291A974D00E2C025 /* Offer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Offer.m; sourceTree = "<group>"; };
 		EBB09AA22913ED8B00A32275 /* Kai-Ping-Tseng_DigitalTurbine_Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kai-Ping-Tseng_DigitalTurbine_Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB09AA52913ED8B00A32275 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EBB09AA62913ED8B00A32275 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				EBB09AA92913ED8B00A32275 /* SceneDelegate.m */,
 				EBB09ADC2914107400A32275 /* MainViewController.h */,
 				EBB09ADD2914107400A32275 /* MainViewController.m */,
+				EB0C5FEE291A974D00E2C025 /* Offer.h */,
+				EB0C5FEF291A974D00E2C025 /* Offer.m */,
 				EBB09AB12913ED8C00A32275 /* Assets.xcassets */,
 				EBB09AB32913ED8C00A32275 /* LaunchScreen.storyboard */,
 				EBB09AB62913ED8C00A32275 /* Info.plist */,
@@ -265,6 +270,7 @@
 				EBB09AA72913ED8B00A32275 /* AppDelegate.m in Sources */,
 				EBB09AB82913ED8C00A32275 /* main.m in Sources */,
 				EBB09AAA2913ED8B00A32275 /* SceneDelegate.m in Sources */,
+				EB0C5FF0291A974D00E2C025 /* Offer.m in Sources */,
 				EBB09ADE2914107400A32275 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

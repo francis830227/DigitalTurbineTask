@@ -133,7 +133,11 @@
     appIDLabel.text = @"Application ID";
     appIDLabel.textAlignment = NSTextAlignmentLeft;
     
+    NSInteger defaultAppID = 1246;
+    NSString *defaultAppIDString = [@(defaultAppID) stringValue];
     self.appIDTextField = [[UITextField alloc] init];
+    self.appIDTextField.text = defaultAppIDString;
+    _appID = defaultAppID;
     self.appIDTextField.backgroundColor = UIColor.lightGrayColor;
     self.appIDTextField.placeholder = @"Enter...";
     self.appIDTextField.tag = 0;
@@ -146,7 +150,10 @@
     userIDLabel.text = @"User ID";
     userIDLabel.textAlignment = NSTextAlignmentLeft;
     
+    NSString *defaultUID = @"superman";
     self.userIDTextField = [[UITextField alloc] init];
+    self.userIDTextField.text = defaultUID;
+    _userID = defaultUID;
     self.userIDTextField.backgroundColor = UIColor.lightGrayColor;
     self.userIDTextField.placeholder = @"Enter...";
     self.userIDTextField.tag = 1;
@@ -155,10 +162,13 @@
     
     UILabel *securityTokenLabel = [[UILabel alloc] init];
     securityTokenLabel.backgroundColor = UIColor.clearColor;
-    securityTokenLabel.text = @"securityToken";
+    securityTokenLabel.text = @"Security Token";
     securityTokenLabel.textAlignment = NSTextAlignmentLeft;
     
+    NSString *token = @"82085b8b7b31b3e80beefdc0430e2315f67cd3e1";
     self.securityTokenTextField = [[UITextField alloc] init];
+    self.securityTokenTextField.text = token;
+    _securityToken = token;
     self.securityTokenTextField.backgroundColor = UIColor.lightGrayColor;
     self.securityTokenTextField.placeholder = @"Enter...";
     self.securityTokenTextField.tag = 2;

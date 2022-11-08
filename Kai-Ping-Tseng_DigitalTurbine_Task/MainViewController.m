@@ -82,7 +82,7 @@
             
 //    NSString *appIDString = [@(appID) stringValue];
 //    NSURLQueryItem *appIDItem = [[NSURLQueryItem alloc] initWithName:@"appid" value:appIDString];
-    NSURLQueryItem *appIDItem = [[NSURLQueryItem alloc] initWithName:@"appid" value:@"2070"];
+    NSURLQueryItem *appIDItem = [[NSURLQueryItem alloc] initWithName:@"appid" value:@"1246"];
 
     
 //    NSURLQueryItem *userIDItem = [[NSURLQueryItem alloc] initWithName:@"uid" value:uid];
@@ -153,7 +153,7 @@
         NSString *str = [NSString stringWithFormat:@"%@=%@", item.name, item.value];
         [queryStrings addObject:str];
     }
-    [queryStrings addObject:@"e95a21621a1865bcbae3bee89c4d4f84"];
+    [queryStrings addObject:@"82085b8b7b31b3e80beefdc0430e2315f67cd3e1"];
     NSString *concatenatedString = [queryStrings componentsJoinedByString:@"&"];
     NSString *hashKey = [self returnHashWithSHA1:concatenatedString];
     
@@ -178,13 +178,9 @@
         
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         NSString *message = results[@"message"];
-        
-        NSLog(@"%@", results);
-        NSLog(@"%lu", (unsigned long)statusCode);
-        
+                
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             if (statusCode == 200){
-                NSLog(@"data========");
                 NSLog(@"%@", message);
             }else{
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Something's wrong..."

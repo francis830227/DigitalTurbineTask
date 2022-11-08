@@ -9,4 +9,6 @@
 
 @interface ListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
+- (instancetype) initWithOffers: (NSArray *)offers;
+
 @end

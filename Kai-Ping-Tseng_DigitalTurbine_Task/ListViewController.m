@@ -7,14 +7,27 @@
 
 #import "ListViewController.h"
 #import "OfferTableViewCell.h"
+#import "Offer.h"
 
 @interface ListViewController ()
+
+@property NSArray *offers;
 
 @end
 
 @implementation ListViewController
 
 static NSString *cellIdentifier = @"cell";
+
+- (instancetype) initWithOffers: (NSArray *)offers {
+    self = [super initWithNibName:nil bundle:nil];
+    
+    if (self) {
+        self.offers = offers;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,13 +49,14 @@ static NSString *cellIdentifier = @"cell";
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     OfferTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    [cell updateContentsWithTitle:@"titletitle" andImageURL:[NSURL URLWithString:@""]];
+    Offer *offer = _offers[indexPath.row];
+    [cell updateContentsWithTitle:offer.title
+                      andImageURL:offer.imageURL];
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return _offers.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

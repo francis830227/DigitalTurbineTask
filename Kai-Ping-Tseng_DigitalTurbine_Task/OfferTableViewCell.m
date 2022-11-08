@@ -29,7 +29,7 @@
     titleLabel = [UILabel new];
     imageView = [UIImageView new];
     
-    titleLabel.numberOfLines = 0;    
+    titleLabel.numberOfLines = 0;
     
     [self.contentView addSubview:imageView];
     [self.contentView addSubview:titleLabel];

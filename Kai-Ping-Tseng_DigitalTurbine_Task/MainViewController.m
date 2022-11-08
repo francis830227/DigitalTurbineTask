@@ -76,7 +76,10 @@
     return output;
 }
 
-- (void)fetchData:(NSInteger)appID :(NSString*)uid :(NSString*)token {
+
+
+- (void)getOfferswithAppID:(NSInteger)appID uid:(NSString*)uid andToken:(NSString*)token :(void(^)(NSArray*))completion {
+    
     NSURLComponents *components = [NSURLComponents new];
     [components setScheme:@"http"];
     [components setHost:@"api.fyber.com"];
@@ -210,21 +213,16 @@
                         
                         [offers addObject:offer];
                     }
+                    
+                    completion(offers);
                                         
                 }
                 
                 
             } else {
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Something's wrong..."
-                                                                               message:@""
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *firstAction = [UIAlertAction actionWithTitle:@"Ok"
-                                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                }];
                 
-                [alert addAction:firstAction];
+                completion(nil);
                 
-                [self presentViewController:alert animated:YES completion:nil];
             }
         });
            
@@ -244,11 +242,27 @@
 }
 
 - (void)send:(UIButton*)sender {
-    [self fetchData:self.appID :self.userID :self.securityToken];
+    __weak id weakSelf = self;
+    [self getOfferswithAppID:self.appID uid:self.userID andToken:self.securityToken :^(NSArray *offers) {
+        if (offers != nil) {
+            ListViewController *listVC = [[ListViewController alloc] initWithOffers:offers];
+            listVC.modalPresentationStyle = UIModalPresentationAutomatic;
+            [weakSelf presentViewController:listVC animated:true completion:nil];
+        } else {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Something's wrong..."
+                                                                           message:@""
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *firstAction = [UIAlertAction actionWithTitle:@"Ok"
+                                                                  style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            }];
+            
+            [alert addAction:firstAction];
+            
+            [weakSelf presentViewController:alert animated:YES completion:nil];
+        }
+        
+    }];
     
-    ListViewController *listVC = [ListViewController new];
-    listVC.modalPresentationStyle = UIModalPresentationAutomatic;
-    [self presentViewController:listVC animated:true completion:nil];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

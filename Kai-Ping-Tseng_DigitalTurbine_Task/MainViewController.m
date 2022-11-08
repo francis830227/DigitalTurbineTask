@@ -10,6 +10,7 @@
 #import <AppTrackingTransparency/AppTrackingTransparency.h>
 #import <AdSupport/AdSupport.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "Offer.h"
 
 @interface MainViewController ()
 
@@ -79,6 +80,8 @@
     [components setScheme:@"http"];
     [components setHost:@"api.fyber.com"];
     [components setPath:@"/feed/v1/offers.json"];
+    
+    NSString *apiKey = @"82085b8b7b31b3e80beefdc0430e2315f67cd3e1";
             
 //    NSString *appIDString = [@(appID) stringValue];
 //    NSURLQueryItem *appIDItem = [[NSURLQueryItem alloc] initWithName:@"appid" value:appIDString];
@@ -153,7 +156,7 @@
         NSString *str = [NSString stringWithFormat:@"%@=%@", item.name, item.value];
         [queryStrings addObject:str];
     }
-    [queryStrings addObject:@"82085b8b7b31b3e80beefdc0430e2315f67cd3e1"];
+    [queryStrings addObject:apiKey];
     NSString *concatenatedString = [queryStrings componentsJoinedByString:@"&"];
     NSString *hashKey = [self returnHashWithSHA1:concatenatedString];
     
@@ -173,18 +176,46 @@
     [urlRequest setHTTPMethod:@"GET"];
     
     NSURLSessionDataTask *dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
+                
         NSUInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
         
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        NSString *message = results[@"message"];
+        
+        
+        //checking the signature
+        NSDictionary *headers = ((NSHTTPURLResponse *)response).allHeaderFields;
+        NSString *signature = [headers objectForKey:@"X-Sponsorpay-Response-Signature"];
+        NSString *dataString = [NSString stringWithUTF8String:[data bytes]];
+
+        NSString *responseBodyWithApiKey = [NSString stringWithFormat:@"%@%@", dataString, apiKey];
+
+        NSString *encodedResponseBodyWithApiKey = [self returnHashWithSHA1:responseBodyWithApiKey];
                 
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            if (statusCode == 200){
-                NSLog(@"%@", message);
-            }else{
+            if (statusCode == 200) {
+                
+                if (![[results objectForKey:@"offers"] isEqual:@""]) {
+                    
+                    NSMutableArray *jsonOffers = [results objectForKey:@"offers"];
+                    
+                    NSMutableArray *offers = [NSMutableArray new];
+                    
+                    for (NSDictionary *offerDict in jsonOffers) {
+                        NSString *title = [offerDict objectForKey:@"title"];
+                        NSDictionary *thumbnails = [offerDict objectForKey:@"thumbnail"];
+                        NSString *thumbnail = [thumbnails objectForKey:@"hires"];
+                        
+                        Offer *offer = [[Offer alloc] initWithTitle:title andImageURL:[NSURL URLWithString:thumbnail]];
+                        
+                        [offers addObject:offer];
+                    }
+                                        
+                }
+                
+                
+            } else {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Something's wrong..."
-                                                                               message:message
+                                                                               message:@""
                                                                         preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *firstAction = [UIAlertAction actionWithTitle:@"Ok"
                                                                       style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {

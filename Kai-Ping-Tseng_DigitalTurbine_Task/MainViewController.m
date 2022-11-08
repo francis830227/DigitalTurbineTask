@@ -11,6 +11,7 @@
 #import <AdSupport/AdSupport.h>
 #import <CommonCrypto/CommonDigest.h>
 #import "Offer.h"
+#import "ListViewController.h"
 
 @interface MainViewController ()
 
@@ -243,8 +244,11 @@
 }
 
 - (void)send:(UIButton*)sender {
-    NSLog(@"sendButtonClicked");
     [self fetchData:self.appID :self.userID :self.securityToken];
+    
+    ListViewController *listVC = [ListViewController new];
+    listVC.modalPresentationStyle = UIModalPresentationAutomatic;
+    [self presentViewController:listVC animated:true completion:nil];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -266,8 +270,6 @@
         case securityTokenTFType:
             self.securityToken = str;
     }
-    
-    NSLog(@"%ld", (long)self.appID);
 }
 
 - (void)setupViews {

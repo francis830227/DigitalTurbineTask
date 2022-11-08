@@ -207,7 +207,7 @@
                     for (NSDictionary *offerDict in jsonOffers) {
                         NSString *title = [offerDict objectForKey:@"title"];
                         NSDictionary *thumbnails = [offerDict objectForKey:@"thumbnail"];
-                        NSString *thumbnail = [thumbnails objectForKey:@"hires"];
+                        NSString *thumbnail = [thumbnails objectForKey:@"lowres"];
                         
                         Offer *offer = [[Offer alloc] initWithTitle:title andImageURL:[NSURL URLWithString:thumbnail]];
                         

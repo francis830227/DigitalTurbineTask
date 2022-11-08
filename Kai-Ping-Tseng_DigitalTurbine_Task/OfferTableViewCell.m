@@ -21,6 +21,10 @@
 
 - (void)updateContentsWithTitle:(NSString *)title andImageURL:(NSURL *)url {
     titleLabel.text = title;
+    
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [UIImage imageWithData:data];
+    imageView.image = image;
 }
 
 - (void)setupViews {

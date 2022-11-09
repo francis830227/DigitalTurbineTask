@@ -1,0 +1,13 @@
+# DigitalTurbineTask
+
+
+1. Why I created this app in one single branch? 
+I think the tasks in this app are relatively simple, the conflict between files are controllable at this scale.
+
+2. The page of lists of offers is not smooth when scrolling. 
+It's because I didn't handle images cache and prefetching, the cells will fetch image when they appear. If this app is in production, I will use a 3rd party library like SDWebImage(for Obj-c) or KingFisher(for Swift) to deal with images, or even create custom images cache by my own.
+
+3. The helper functions are all static functions.
+Since they are dealing with simple tasks, I think it's appropriate to create them statically in current scale. Once they have more complex tasks to do, like async tasks, I will create them as instances, so that it can bring more testability and more control of life cycle.
+
+Thank you!

@@ -7,7 +7,7 @@
 
 #import <XCTest/XCTest.h>
 #import "RemoteFeedLoader.h"
-#import "HTTPClient.h"
+#import "HTTPClientSpy.h"
 
 @interface Kai_Ping_Tseng_DigitalTurbine_TaskTests : XCTestCase
 
@@ -26,21 +26,22 @@
 - (void)test_load_requestsDataFromURL {
     NSURL *url = [self anyURL];
     
-    HTTPClient *client = [HTTPClient new];
+    HTTPClientSpy *client = [HTTPClientSpy new];
+        
+    RemoteFeedLoader *sut = [self makeSUTWith:url
+                                    andClient:client];
     
-//    NSMutableArray *receivedRequests =
+    [sut loadWithURL:url andToken:@"token" :^(NSArray *array, BOOL isSigIdentical, NSError *error) {
+        
+    }];
     
-    RemoteFeedLoader *sut = [self makeSUTWith:url];
-    
-    [sut];
+    XCTAssertEqual([client.requestedURLs count], 1);
 }
 
 // MARK: Helpers
 
-- (RemoteFeedLoader*)makeSUTWith: (NSURL*)url {
-    HTTPClient *client = [HTTPClient new];
+- (RemoteFeedLoader*)makeSUTWith: (NSURL*)url andClient: (HTTPClientSpy*)client {
     RemoteFeedLoader *sut = [[RemoteFeedLoader alloc] initWithUrl:url andClient:client];
-    
     return sut;
 }
 

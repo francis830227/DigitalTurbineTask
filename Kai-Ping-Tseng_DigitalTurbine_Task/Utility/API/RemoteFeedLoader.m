@@ -22,7 +22,7 @@
 
 @implementation RemoteFeedLoader
 
-- (void)loadWithURL: (NSURL *)url :(NSString *)token :(void(^)(NSArray*, BOOL, NSError*))completion {
+- (void)loadWithURL: (NSURL *)url andToken:(NSString *)token :(void(^)(NSArray*, BOOL, NSError*))completion {
     
     [_client getFrom:url :^(NSData *data, NSHTTPURLResponse *response, NSError* error) {
         
@@ -39,30 +39,28 @@
         
         NSUInteger statusCode = response.statusCode;
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (statusCode == 200 && ![[results objectForKey:@"offers"] isEqual:@""]) {
-                NSMutableArray *jsonOffers = [results objectForKey:@"offers"];
+        if (statusCode == 200 && ![[results objectForKey:@"offers"] isEqual:@""]) {
+            NSMutableArray *jsonOffers = [results objectForKey:@"offers"];
+            
+            NSMutableArray *offers = [NSMutableArray new];
+            
+            for (NSDictionary *offerDict in jsonOffers) {
+                NSString *title = [offerDict objectForKey:@"title"];
+                NSDictionary *thumbnails = [offerDict objectForKey:@"thumbnail"];
+                NSString *thumbnail = [thumbnails objectForKey:@"lowres"];
                 
-                NSMutableArray *offers = [NSMutableArray new];
+                Offer *offer = [[Offer alloc] initWithTitle:title andImageURL:[NSURL URLWithString:thumbnail]];
                 
-                for (NSDictionary *offerDict in jsonOffers) {
-                    NSString *title = [offerDict objectForKey:@"title"];
-                    NSDictionary *thumbnails = [offerDict objectForKey:@"thumbnail"];
-                    NSString *thumbnail = [thumbnails objectForKey:@"lowres"];
-                    
-                    Offer *offer = [[Offer alloc] initWithTitle:title andImageURL:[NSURL URLWithString:thumbnail]];
-                    
-                    [offers addObject:offer];
-                }
-                
-                completion(offers, isSidIdentical, error);
-                
-            } else {
-                
-                completion(nil, isSidIdentical, error);
-                
+                [offers addObject:offer];
             }
-        });
+            
+            completion(offers, isSidIdentical, error);
+            
+        } else {
+            
+            completion(nil, isSidIdentical, error);
+            
+        }
     }];
 }
 
@@ -74,7 +72,7 @@
     NSArray *queryItems = [self makeQueryItemsFromAppID:appID uid:uid andToken:token];
     [components setQueryItems:queryItems];
     
-    [self loadWithURL:components.URL :token :^(NSArray *offers, BOOL isSidIdentical, NSError *error) {
+    [self loadWithURL:components.URL andToken:token :^(NSArray *offers, BOOL isSidIdentical, NSError *error) {
         
         completion(offers, isSidIdentical);
         

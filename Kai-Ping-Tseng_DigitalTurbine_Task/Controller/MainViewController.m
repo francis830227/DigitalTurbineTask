@@ -40,24 +40,25 @@
     HTTPClient *client = [HTTPClient new];
     RemoteFeedLoader *feedLoader = [[RemoteFeedLoader alloc] initWithUrl: [URLProvider getOffersURL] andClient:client];
     [feedLoader getOfferswithAppID:self.appID uid:self.userID andToken:self.securityToken :^(NSArray *offers, BOOL isSidIdentical) {
-        if (offers != nil) {
-            ListViewController *listVC = [[ListViewController alloc] initWithOffers:offers
-                                                                  andIsSidIdentical:isSidIdentical];
-            listVC.modalPresentationStyle = UIModalPresentationAutomatic;
-            [weakSelf presentViewController:listVC animated:true completion:nil];
-        } else {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Something's wrong..."
-                                                                           message:@""
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *firstAction = [UIAlertAction actionWithTitle:@"Ok"
-                                                                  style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            }];
-            
-            [alert addAction:firstAction];
-            
-            [weakSelf presentViewController:alert animated:YES completion:nil];
-        }
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (offers != nil) {
+                ListViewController *listVC = [[ListViewController alloc] initWithOffers:offers
+                                                                      andIsSidIdentical:isSidIdentical];
+                listVC.modalPresentationStyle = UIModalPresentationAutomatic;
+                [weakSelf presentViewController:listVC animated:true completion:nil];
+            } else {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Something's wrong..."
+                                                                               message:@""
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *firstAction = [UIAlertAction actionWithTitle:@"Ok"
+                                                                      style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                
+                [alert addAction:firstAction];
+                
+                [weakSelf presentViewController:alert animated:YES completion:nil];
+            }
+        });
     }];
     
 }

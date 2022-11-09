@@ -16,6 +16,7 @@
 		EB0C6009291B105500E2C025 /* AdvertisingInfoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6008291B105500E2C025 /* AdvertisingInfoHelper.m */; };
 		EB0C6011291B30AD00E2C025 /* HTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6010291B30AD00E2C025 /* HTTPClient.m */; };
 		EB0C6014291BCCDF00E2C025 /* URLProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6013291BCCDF00E2C025 /* URLProvider.m */; };
+		EB0C601A291BD60100E2C025 /* HTTPClientSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6019291BD60100E2C025 /* HTTPClientSpy.m */; };
 		EBB09AA72913ED8B00A32275 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AA62913ED8B00A32275 /* AppDelegate.m */; };
 		EBB09AAA2913ED8B00A32275 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AA92913ED8B00A32275 /* SceneDelegate.m */; };
 		EBB09AB22913ED8C00A32275 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBB09AB12913ED8C00A32275 /* Assets.xcassets */; };
@@ -63,6 +64,8 @@
 		EB0C6010291B30AD00E2C025 /* HTTPClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPClient.m; sourceTree = "<group>"; };
 		EB0C6012291BCCDF00E2C025 /* URLProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLProvider.h; sourceTree = "<group>"; };
 		EB0C6013291BCCDF00E2C025 /* URLProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLProvider.m; sourceTree = "<group>"; };
+		EB0C6018291BD60100E2C025 /* HTTPClientSpy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPClientSpy.h; sourceTree = "<group>"; };
+		EB0C6019291BD60100E2C025 /* HTTPClientSpy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPClientSpy.m; sourceTree = "<group>"; };
 		EBB09AA22913ED8B00A32275 /* Kai-Ping-Tseng_DigitalTurbine_Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kai-Ping-Tseng_DigitalTurbine_Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB09AA52913ED8B00A32275 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EBB09AA62913ED8B00A32275 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -213,6 +216,8 @@
 			isa = PBXGroup;
 			children = (
 				EBB09AC12913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskTests.m */,
+				EB0C6018291BD60100E2C025 /* HTTPClientSpy.h */,
+				EB0C6019291BD60100E2C025 /* HTTPClientSpy.m */,
 			);
 			path = "Kai-Ping-Tseng_DigitalTurbine_TaskTests";
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBB09AC22913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskTests.m in Sources */,
+				EB0C601A291BD60100E2C025 /* HTTPClientSpy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

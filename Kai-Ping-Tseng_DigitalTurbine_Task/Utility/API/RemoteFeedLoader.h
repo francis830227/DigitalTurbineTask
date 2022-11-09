@@ -10,7 +10,7 @@
 
 @interface RemoteFeedLoader : NSObject
 
-- (void)loadWithURL: (NSURL *)url :(NSString *)token :(void(^)(NSArray*, BOOL, NSError*))completion;
+- (void)loadWithURL: (NSURL *)url andToken:(NSString *)token :(void(^)(NSArray*, BOOL, NSError*))completion;
 
 - (void)getOfferswithAppID:(NSInteger)appID uid:(NSString*)uid andToken:(NSString*)token :(void(^)(NSArray*, BOOL))completion;
 

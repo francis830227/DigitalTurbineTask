@@ -40,7 +40,7 @@ static NSString *cellIdentifier = @"cell";
 }
 
 // MARK: Initialization
-- (instancetype) initWithOffers: (NSArray *)offers andIsSidIdentical: (BOOL) isSidIdentical {
+- (instancetype) initWithOffers: (NSArray *)offers andIsSigIdentical: (BOOL) isSidIdentical {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {

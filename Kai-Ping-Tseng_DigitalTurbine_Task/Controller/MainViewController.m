@@ -39,11 +39,11 @@
     __weak id weakSelf = self; // handled the retain cycle
     HTTPClient *client = [HTTPClient new];
     RemoteFeedLoader *feedLoader = [[RemoteFeedLoader alloc] initWithUrl: [URLProvider getOffersURL] andClient:client];
-    [feedLoader getOfferswithAppID:self.appID uid:self.userID andToken:self.securityToken :^(NSArray *offers, BOOL isSidIdentical) {
+    [feedLoader getOfferswithAppID:self.appID uid:self.userID andToken:self.securityToken :^(NSArray *offers, BOOL isSigIdentical) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (offers != nil) {
                 ListViewController *listVC = [[ListViewController alloc] initWithOffers:offers
-                                                                      andIsSidIdentical:isSidIdentical];
+                                                                      andIsSigIdentical:isSigIdentical];
                 listVC.modalPresentationStyle = UIModalPresentationAutomatic;
                 [weakSelf presentViewController:listVC animated:true completion:nil];
             } else {

@@ -1,5 +1,5 @@
 //
-//  Kai_Ping_Tseng_DigitalTurbine_TaskTests.m
+//  LoadFeedFromRemoteUseCaseTests.m
 //  Kai-Ping-Tseng_DigitalTurbine_TaskTests
 //
 //  Created by Kai-Ping Tseng on 2022/11/3.
@@ -9,18 +9,21 @@
 #import "RemoteFeedLoader.h"
 #import "HTTPClientSpy.h"
 
-@interface Kai_Ping_Tseng_DigitalTurbine_TaskTests : XCTestCase
+@interface LoadFeedFromRemoteUseCaseTests : XCTestCase
 
 @end
 
-@implementation Kai_Ping_Tseng_DigitalTurbine_TaskTests
+@implementation LoadFeedFromRemoteUseCaseTests
 
 - (void)setUp {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+}
+
+- (void)test_init_doesNotRequestDataFromURL {
+    HTTPClientSpy *client = [HTTPClientSpy new];
+    XCTAssertEqual([client.requestedURLs count], 0);
 }
 
 - (void)test_load_requestsDataFromURL {
@@ -36,6 +39,23 @@
     }];
     
     XCTAssertEqual([client.requestedURLs count], 1);
+}
+
+- (void)test_load_requestsDataFromURLTwice {
+    NSURL *url = [self anyURL];
+    
+    HTTPClientSpy *client = [HTTPClientSpy new];
+        
+    RemoteFeedLoader *sut = [self makeSUTWith:url
+                                    andClient:client];
+    
+    [sut loadWithURL:url andToken:@"token" :^(NSArray *array, BOOL isSigIdentical, NSError *error) {
+    }];
+    
+    [sut loadWithURL:url andToken:@"token" :^(NSArray *array, BOOL isSigIdentical, NSError *error) {
+    }];
+    
+    XCTAssertEqual([client.requestedURLs count], 2);
 }
 
 // MARK: Helpers

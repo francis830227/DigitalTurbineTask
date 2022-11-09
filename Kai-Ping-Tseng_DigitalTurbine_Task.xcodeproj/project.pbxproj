@@ -17,12 +17,13 @@
 		EB0C6011291B30AD00E2C025 /* HTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6010291B30AD00E2C025 /* HTTPClient.m */; };
 		EB0C6014291BCCDF00E2C025 /* URLProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6013291BCCDF00E2C025 /* URLProvider.m */; };
 		EB0C601A291BD60100E2C025 /* HTTPClientSpy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6019291BD60100E2C025 /* HTTPClientSpy.m */; };
+		EB0C601C291BE88300E2C025 /* FunctionalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C601B291BE88300E2C025 /* FunctionalTests.m */; };
 		EBB09AA72913ED8B00A32275 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AA62913ED8B00A32275 /* AppDelegate.m */; };
 		EBB09AAA2913ED8B00A32275 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AA92913ED8B00A32275 /* SceneDelegate.m */; };
 		EBB09AB22913ED8C00A32275 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBB09AB12913ED8C00A32275 /* Assets.xcassets */; };
 		EBB09AB52913ED8C00A32275 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBB09AB32913ED8C00A32275 /* LaunchScreen.storyboard */; };
 		EBB09AB82913ED8C00A32275 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AB72913ED8C00A32275 /* main.m */; };
-		EBB09AC22913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AC12913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskTests.m */; };
+		EBB09AC22913ED8C00A32275 /* LoadFeedFromRemoteUseCaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09AC12913ED8C00A32275 /* LoadFeedFromRemoteUseCaseTests.m */; };
 		EBB09ACC2913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09ACB2913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskUITests.m */; };
 		EBB09ACE2913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09ACD2913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskUITestsLaunchTests.m */; };
 		EBB09ADE2914107400A32275 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB09ADD2914107400A32275 /* MainViewController.m */; };
@@ -66,6 +67,7 @@
 		EB0C6013291BCCDF00E2C025 /* URLProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLProvider.m; sourceTree = "<group>"; };
 		EB0C6018291BD60100E2C025 /* HTTPClientSpy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPClientSpy.h; sourceTree = "<group>"; };
 		EB0C6019291BD60100E2C025 /* HTTPClientSpy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPClientSpy.m; sourceTree = "<group>"; };
+		EB0C601B291BE88300E2C025 /* FunctionalTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FunctionalTests.m; sourceTree = "<group>"; };
 		EBB09AA22913ED8B00A32275 /* Kai-Ping-Tseng_DigitalTurbine_Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kai-Ping-Tseng_DigitalTurbine_Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB09AA52913ED8B00A32275 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EBB09AA62913ED8B00A32275 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -76,7 +78,7 @@
 		EBB09AB62913ED8C00A32275 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBB09AB72913ED8C00A32275 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EBB09ABD2913ED8C00A32275 /* Kai-Ping-Tseng_DigitalTurbine_TaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kai-Ping-Tseng_DigitalTurbine_TaskTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EBB09AC12913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Kai_Ping_Tseng_DigitalTurbine_TaskTests.m; sourceTree = "<group>"; };
+		EBB09AC12913ED8C00A32275 /* LoadFeedFromRemoteUseCaseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadFeedFromRemoteUseCaseTests.m; sourceTree = "<group>"; };
 		EBB09AC72913ED8C00A32275 /* Kai-Ping-Tseng_DigitalTurbine_TaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kai-Ping-Tseng_DigitalTurbine_TaskUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB09ACB2913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Kai_Ping_Tseng_DigitalTurbine_TaskUITests.m; sourceTree = "<group>"; };
 		EBB09ACD2913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Kai_Ping_Tseng_DigitalTurbine_TaskUITestsLaunchTests.m; sourceTree = "<group>"; };
@@ -215,7 +217,8 @@
 		EBB09AC02913ED8C00A32275 /* Kai-Ping-Tseng_DigitalTurbine_TaskTests */ = {
 			isa = PBXGroup;
 			children = (
-				EBB09AC12913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskTests.m */,
+				EBB09AC12913ED8C00A32275 /* LoadFeedFromRemoteUseCaseTests.m */,
+				EB0C601B291BE88300E2C025 /* FunctionalTests.m */,
 				EB0C6018291BD60100E2C025 /* HTTPClientSpy.h */,
 				EB0C6019291BD60100E2C025 /* HTTPClientSpy.m */,
 			);
@@ -380,7 +383,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBB09AC22913ED8C00A32275 /* Kai_Ping_Tseng_DigitalTurbine_TaskTests.m in Sources */,
+				EB0C601C291BE88300E2C025 /* FunctionalTests.m in Sources */,
+				EBB09AC22913ED8C00A32275 /* LoadFeedFromRemoteUseCaseTests.m in Sources */,
 				EB0C601A291BD60100E2C025 /* HTTPClientSpy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

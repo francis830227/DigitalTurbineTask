@@ -15,8 +15,9 @@
 #import "ListViewController.h"
 
 #import "SHA1Helper.h"
+#import "URLProvider.h"
 
-#import "NetworkManager.h"
+#import "RemoteFeedLoader.h"
 
 @interface MainViewController ()
 
@@ -36,7 +37,9 @@
 
 - (void)send:(UIButton*)sender {
     __weak id weakSelf = self; // handled the retain cycle
-    [NetworkManager.shared getOfferswithAppID:self.appID uid:self.userID andToken:self.securityToken :^(NSArray *offers, BOOL isSidIdentical) {
+    HTTPClient *client = [HTTPClient new];
+    RemoteFeedLoader *feedLoader = [[RemoteFeedLoader alloc] initWithUrl: [URLProvider getOffersURL] andClient:client];
+    [feedLoader getOfferswithAppID:self.appID uid:self.userID andToken:self.securityToken :^(NSArray *offers, BOOL isSidIdentical) {
         if (offers != nil) {
             ListViewController *listVC = [[ListViewController alloc] initWithOffers:offers
                                                                   andIsSidIdentical:isSidIdentical];

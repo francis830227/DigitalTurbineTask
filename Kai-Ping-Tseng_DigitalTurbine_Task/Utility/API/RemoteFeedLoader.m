@@ -1,35 +1,87 @@
 //
-//  NetworkManager.m
+//  RemoteFeedLoader.m
 //  Kai-Ping-Tseng_DigitalTurbine_Task
 //
 //  Created by Kai-Ping Tseng on 2022/11/8.
 //
 
-#import "NetworkManager.h"
+#import "RemoteFeedLoader.h"
 #import "SHA1Helper.h"
 #import "DeviceInfoHelper.h"
 #import "AdvertisingInfoHelper.h"
 #import "Offer.h"
+#import "HTTPClient.h"
 
-@implementation NetworkManager
+@interface RemoteFeedLoader ()
 
-+ (instancetype)shared {
-    static NetworkManager *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[NetworkManager alloc] init];
-    });
-    return sharedInstance;
+@property NSURL *url;
+
+@property HTTPClient *client;
+
+@end
+
+@implementation RemoteFeedLoader
+
+- (void)loadWithURL: (NSURL *)url :(NSString *)token :(void(^)(NSArray*, BOOL, NSError*))completion {
+    
+    [_client getFrom:url :^(NSData *data, NSHTTPURLResponse *response, NSError* error) {
+        
+        //  get the signature
+        NSDictionary *headers = response.allHeaderFields;
+        NSString *signature = [headers objectForKey:@"X-Sponsorpay-Response-Signature"];
+        NSString *dataString = [NSString stringWithUTF8String:[data bytes]];
+        
+        NSString *responseBodyWithApiKey = [NSString stringWithFormat:@"%@%@", dataString, token];
+        
+        NSString *encodedResponseBodyWithApiKey = [SHA1Helper getHash:responseBodyWithApiKey];
+        
+        BOOL isSidIdentical = [signature isEqualToString:encodedResponseBodyWithApiKey];
+        
+        NSUInteger statusCode = response.statusCode;
+        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (statusCode == 200 && ![[results objectForKey:@"offers"] isEqual:@""]) {
+                NSMutableArray *jsonOffers = [results objectForKey:@"offers"];
+                
+                NSMutableArray *offers = [NSMutableArray new];
+                
+                for (NSDictionary *offerDict in jsonOffers) {
+                    NSString *title = [offerDict objectForKey:@"title"];
+                    NSDictionary *thumbnails = [offerDict objectForKey:@"thumbnail"];
+                    NSString *thumbnail = [thumbnails objectForKey:@"lowres"];
+                    
+                    Offer *offer = [[Offer alloc] initWithTitle:title andImageURL:[NSURL URLWithString:thumbnail]];
+                    
+                    [offers addObject:offer];
+                }
+                
+                completion(offers, isSidIdentical, error);
+                
+            } else {
+                
+                completion(nil, isSidIdentical, error);
+                
+            }
+        });
+    }];
 }
 
 - (void)getOfferswithAppID:(NSInteger)appID uid:(NSString*)uid andToken:(NSString*)token :(void(^)(NSArray*, BOOL))completion {
     
-    // domain + path
-    NSURLComponents *components = [NSURLComponents new];
-    [components setScheme:@"http"];
-    [components setHost:@"api.fyber.com"];
-    [components setPath:@"/feed/v1/offers.json"];
+    // combine base url with params
+    NSURLComponents *components = [[NSURLComponents alloc] initWithString:self.url.absoluteString];
+    
+    NSArray *queryItems = [self makeQueryItemsFromAppID:appID uid:uid andToken:token];
+    [components setQueryItems:queryItems];
+    
+    [self loadWithURL:components.URL :token :^(NSArray *offers, BOOL isSidIdentical, NSError *error) {
+        
+        completion(offers, isSidIdentical);
+        
+    }];
+}
 
+- (NSArray*)makeQueryItemsFromAppID:(NSInteger) appID uid:(NSString*)uid andToken:(NSString*)token {
     // appID
     NSString *appIDString = [@(appID) stringValue];
     NSURLQueryItem *appIDItem = [[NSURLQueryItem alloc] initWithName:@"appid" value:appIDString];
@@ -95,64 +147,8 @@
     //  append hash to query items
     NSMutableArray *modQueryItems = [NSMutableArray arrayWithArray:queryItems];
     [modQueryItems addObject:hashkeyItem];
-    [components setQueryItems:modQueryItems];
     
-    // session
-    NSURLSessionConfiguration *defaultSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultSessionConfiguration];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:components.URL];
-    [urlRequest setHTTPMethod:@"GET"];
-    
-    //  create url session data task
-    NSURLSessionDataTask *dataTask = [defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                
-        NSUInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
-        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        
-        //  get the signature
-        NSDictionary *headers = ((NSHTTPURLResponse *)response).allHeaderFields;
-        NSString *signature = [headers objectForKey:@"X-Sponsorpay-Response-Signature"];
-        NSString *dataString = [NSString stringWithUTF8String:[data bytes]];
-
-        NSString *responseBodyWithApiKey = [NSString stringWithFormat:@"%@%@", dataString, token];
-
-        NSString *encodedResponseBodyWithApiKey = [SHA1Helper getHash:responseBodyWithApiKey];
-        
-        BOOL isSidIdentical = [signature isEqualToString:encodedResponseBodyWithApiKey];
-                
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            
-            // success
-            if (statusCode == 200 && ![[results objectForKey:@"offers"] isEqual:@""]) {
-                
-                NSMutableArray *jsonOffers = [results objectForKey:@"offers"];
-                
-                NSMutableArray *offers = [NSMutableArray new];
-                
-                for (NSDictionary *offerDict in jsonOffers) {
-                    NSString *title = [offerDict objectForKey:@"title"];
-                    NSDictionary *thumbnails = [offerDict objectForKey:@"thumbnail"];
-                    NSString *thumbnail = [thumbnails objectForKey:@"lowres"];
-                    
-                    Offer *offer = [[Offer alloc] initWithTitle:title andImageURL:[NSURL URLWithString:thumbnail]];
-                    
-                    [offers addObject:offer];
-                }
-                
-                completion(offers, isSidIdentical);
-                
-            } else {
-                
-                completion(nil, isSidIdentical);
-                
-            }
-            
-        });
-        
-    }];
-    
-    //  fire the request
-    [dataTask resume];
+    return modQueryItems;
 }
 
 - (NSString*)getPhoneVersionWithSystemVersion: (NSString*) systemVersion {
@@ -186,6 +182,18 @@
     NSString *concatenatedString = [queryStrings componentsJoinedByString:@"&"];
     NSString *hashKey = [SHA1Helper getHash:concatenatedString];
     return hashKey;
+}
+
+// MARK: Initialization
+- (instancetype) initWithUrl: (NSURL *)url andClient: (HTTPClient *)client {
+    self = [super init];
+    
+    if (self) {
+        self.url = url;
+        self.client = client;
+    }
+    
+    return self;
 }
 
 @end

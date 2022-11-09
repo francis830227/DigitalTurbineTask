@@ -6,6 +6,8 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "RemoteFeedLoader.h"
+#import "HTTPClient.h"
 
 @interface Kai_Ping_Tseng_DigitalTurbine_TaskTests : XCTestCase
 
@@ -21,16 +23,29 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)test_load_requestsDataFromURL {
+    NSURL *url = [self anyURL];
+    
+    HTTPClient *client = [HTTPClient new];
+    
+//    NSMutableArray *receivedRequests =
+    
+    RemoteFeedLoader *sut = [self makeSUTWith:url];
+    
+    [sut];
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+// MARK: Helpers
+
+- (RemoteFeedLoader*)makeSUTWith: (NSURL*)url {
+    HTTPClient *client = [HTTPClient new];
+    RemoteFeedLoader *sut = [[RemoteFeedLoader alloc] initWithUrl:url andClient:client];
+    
+    return sut;
+}
+
+- (NSURL*)anyURL {
+    return [NSURL URLWithString:@"http://any-url.com"];
 }
 
 @end

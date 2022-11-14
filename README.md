@@ -13,3 +13,5 @@ Since they are dealing with simple tasks, I think it's appropriate to create the
 4. Unfortunately, I still don't match the signature from the header and the signature created by me. But since I can get the results, I decided to show 'signature is incorrect' on the top of the result page.
 
 Thank you!
+
+- 15.11.2022 update: import 'SDWebImage' with SwiftPackageManager

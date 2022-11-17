@@ -22,6 +22,24 @@
 
 @implementation RemoteFeedLoader
 
+- (NSMutableDictionary *) createMockDict {
+    // create mock dictionary
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    
+    NSMutableDictionary *offerTypeDict1 = [NSMutableDictionary new];
+    [offerTypeDict1 setValue:@"104" forKey:@"offer_type_id"];
+    [offerTypeDict1 setValue:@"Registration" forKey:@"readable"];
+    
+    NSMutableDictionary *offerTypeDict2 = [NSMutableDictionary new];
+    [offerTypeDict2 setValue:@"108" forKey:@"offer_type_id"];
+    [offerTypeDict2 setValue:@"Registration" forKey:@"readable"];
+    
+    [dict setValue:[[NSArray alloc] initWithObjects:offerTypeDict1, offerTypeDict2, nil] forKey:@"offer_types"];
+    [dict setValue:@"1435675" forKey:@"offer_id"];
+    
+    return dict;
+}
+
 - (void)loadWithURL: (NSURL *)url andToken:(NSString *)token :(void(^)(NSArray*, BOOL, NSError*))completion {
     
     [_client getFrom:url :^(NSData *data, NSHTTPURLResponse *response, NSError* error) {
@@ -29,13 +47,17 @@
         //  get the signature
         NSDictionary *headers = response.allHeaderFields;
         NSString *signature = [headers objectForKey:@"X-Sponsorpay-Response-Signature"];
-        NSString *dataString = [NSString stringWithUTF8String:[data bytes]];
         
-        NSString *responseBodyWithApiKey = [NSString stringWithFormat:@"%@%@", dataString, token];
+        NSString *stringISOLatin = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
+        NSData *dataUTF8 = [stringISOLatin dataUsingEncoding:NSUTF8StringEncoding];
         
-        NSString *encodedResponseBodyWithApiKey = [SHA1Helper getHash:responseBodyWithApiKey];
+//        id dict = [NSJSONSerialization JSONObjectWithData:dataUTF8 options:0 error:&error];
+        NSMutableDictionary *dict = [self createMockDict];
         
-        BOOL isSidIdentical = [signature isEqualToString:encodedResponseBodyWithApiKey];
+        
+        NSString *hashKey = [self generateHashKeyWithDict:dict andToken:token];
+                        
+        BOOL isSigIdentical = [signature isEqualToString:hashKey];
         
         NSUInteger statusCode = response.statusCode;
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
@@ -54,11 +76,11 @@
                 [offers addObject:offer];
             }
             
-            completion(offers, isSidIdentical, error);
+            completion(offers, isSigIdentical, error);
             
         } else {
             
-            completion(nil, isSidIdentical, error);
+            completion(nil, isSigIdentical, error);
             
         }
     }];
@@ -165,6 +187,64 @@
             break;
     }
     return phoneVersion;
+}
+
+- (NSMutableArray*)getArrayByConcatenatingNestedDict: (NSDictionary*) dict andParentKey: (NSString*) parentKey {
+    NSMutableArray *keyValuePairStrings = [NSMutableArray new];
+    
+    for (id key in dict) {
+        
+        NSString *currentKey = [NSString new];
+        if ([parentKey  isEqual: @""]) {
+            currentKey = key;
+        } else {
+            currentKey = [NSString stringWithFormat:@"%@.%@", parentKey, key];
+        }
+        
+        if ([[dict valueForKey:key] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *nestedDict = [dict valueForKey:key];
+            NSArray *arr = [self getArrayByConcatenatingNestedDict:nestedDict andParentKey:currentKey];
+            [keyValuePairStrings addObjectsFromArray:arr];
+        } else if ([[dict valueForKey:key] isKindOfClass:[NSArray class]]) {
+            NSArray *arrayValue = [dict valueForKey:key];
+
+            for (int i = 0; i < arrayValue.count; i++) {
+
+                if ([[arrayValue objectAtIndex:i] isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *nestedDict = [arrayValue objectAtIndex:i];
+                    NSArray *arr = [self getArrayByConcatenatingNestedDict:nestedDict andParentKey:currentKey];
+                    [keyValuePairStrings addObjectsFromArray:arr];
+                } else {
+                    NSString *value = [arrayValue objectAtIndex:i];
+                    NSString *str = [NSString stringWithFormat:@"%@=%@", currentKey, value];
+                    [keyValuePairStrings addObject: str];
+                }
+
+            }
+
+        } else {
+            NSString *value = [dict valueForKey:key];
+            NSString *str = [NSString stringWithFormat:@"%@=%@", currentKey, value];
+            [keyValuePairStrings addObject: str];
+        }
+        
+    }
+    
+    return keyValuePairStrings;
+}
+
+- (NSString*)generateHashKeyWithDict: (NSDictionary*) dict andToken: (NSString*) token {
+        
+    NSMutableArray *keyValuePairStrings = [self getArrayByConcatenatingNestedDict:dict andParentKey:@""];
+        
+    [keyValuePairStrings sortUsingComparator:^NSComparisonResult(NSString* a, NSString* b) {
+        return [a compare:b];
+    }];
+
+    [keyValuePairStrings addObject:token];
+    NSString *concatenatedString = [keyValuePairStrings componentsJoinedByString:@"&"];
+    NSString *hashKey = [SHA1Helper getHash:concatenatedString];
+    return hashKey;
 }
 
 - (NSString*)generateHashKeyWithQueryItems: (NSArray*) queryItems andToken: (NSString*) token {
